@@ -6,3 +6,4 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 console.log(galleryItems);
 console.log(SimpleLightbox);
+console.log('Hello world!');
