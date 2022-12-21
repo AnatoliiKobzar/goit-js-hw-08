@@ -4,20 +4,19 @@ console.log(Player);
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
-const videoCurrentTime = {
-  'videoplayer-current-time': {},
-};
 
 player.on('timeupdate', onPlay);
 
 function onPlay(currentTime) {
-  console.log(currentTime);
-  videoCurrentTime['videoplayer-current-time'] = currentTime;
-  console.log(videoCurrentTime['videoplayer-current-time'].seconds);
+  localStorage.setItem('videoplayer-current-time', JSON.stringify(currentTime));
 }
 
+const stringifyCurrentTime = localStorage.getItem('videoplayer-current-time');
+const currentTime = JSON.parse(stringifyCurrentTime);
+console.log(currentTime.seconds);
+
 player
-  .setCurrentTime(videoCurrentTime['videoplayer-current-time'].seconds)
+  .setCurrentTime(currentTime.seconds)
   .then(function (seconds) {
     // seconds = the actual time that the player seeked to
   })
