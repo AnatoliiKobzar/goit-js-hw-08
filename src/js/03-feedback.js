@@ -1,24 +1,22 @@
 import throttle from 'lodash.throttle';
 
 const KEY_LOCAL = 'feedback-form-state';
-const refs = {
-  form: document.querySelector('.feedback-form'),
-  inputEmail: document.querySelector('.feedback-form input'),
-  textArea: document.querySelector('.feedback-form textarea'),
-};
+const form = document.querySelector('.feedback-form');
+
 let dataUser = localStorage.getItem(KEY_LOCAL);
 dataUser = dataUser ? JSON.parse(dataUser) : {};
 
-refs.form.addEventListener('submit', onFormSubmit);
-refs.form.addEventListener('input', throttle(onInputFocus, 500));
+form.addEventListener('submit', onFormSubmit);
+form.addEventListener('input', throttle(onInputFocus, 500));
 
 autoComplite();
 
 function onFormSubmit(event) {
   event.preventDefault();
-  localStorage.clear();
-  refs.form.reset();
+  localStorage.removeItem(KEY_LOCAL);
+  form.reset();
   console.log(dataUser);
+  dataUser = {};
   return dataUser;
 }
 
@@ -35,9 +33,14 @@ function onInputFocus(event) {
 function autoComplite() {
   const { email, message } = dataUser;
   if (email) {
-    refs.inputEmail.value = email;
+    form.elements.email.value = email;
   }
   if (message) {
-    refs.textArea.value = message;
+    form.elements.message.value = message;
   }
+}
+
+window.addEventListener('keydown', onKlic);
+function onKlic(event) {
+  console.log(event.code);
 }
