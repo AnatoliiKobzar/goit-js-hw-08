@@ -17,15 +17,14 @@ function onFormSubmit(event) {
   form.reset();
   console.log(dataUser);
   dataUser = {};
-  return dataUser;
 }
 
 function onInputFocus(event) {
   if (event.target.name === 'email') {
-    dataUser.email = event.target.value;
+    dataUser[event.target.name] = event.target.value;
   }
   if (event.target.name === 'message') {
-    dataUser.message = event.target.value;
+    dataUser[event.target.name] = event.target.value;
   }
   localStorage.setItem(KEY_LOCAL, JSON.stringify(dataUser));
 }
@@ -38,9 +37,4 @@ function autoComplite() {
   if (message) {
     form.elements.message.value = message;
   }
-}
-
-window.addEventListener('keydown', onKlic);
-function onKlic(event) {
-  console.log(event.code);
 }
